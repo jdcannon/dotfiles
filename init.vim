@@ -18,6 +18,10 @@
 "   set ruler
 "   set wildmenu
 "   --}}}--
+set tw=90
+set wrap linebreak nolist
+set incsearch
+set hlsearch
 set number
 set ignorecase
 set smartcase
@@ -26,33 +30,42 @@ set expandtab
 set tabstop=2
 set lazyredraw
 
-let mapleader = ","
+let mapleader = "\\"
+let localleader = ","
 " --}}}--
 " Mappings --{{{--
 
-nnoremap \\ :Buffers<CR>
-nnoremap \f :Files<CR>
-nnoremap \a :Ack! 
+nnoremap <leader>\ :Buffers<CR>
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>a :Ack!
+nnoremap <leader>h :nohl<CR>
+nnoremap <leader>c :cclose<CR>
+nnoremap <leader>l :lclose<CR>
+nnoremap <leader>oa :OrgAgendaTodo<CR>
 
-nnoremap \gs :Gstatus<CR>
-nnoremap \gc :Gcommit<CR>
-nnoremap \gu :Gpush<CR>
-nnoremap \gp :Gpull<CR>
-nnoremap \gm :Gmerge<CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gu :Gpush<CR>
+nnoremap <leader>gp :Gpull<CR>
+nnoremap <leader>gm :Gmerge<CR>
 
 nnoremap <leader>ev :e! ~/.config/nvim/init.vim<CR>
 nnoremap <leader>sv :source ~/.config/nvim/init.vim<CR>
 nnoremap <leader>ex :e! ~/.Xresources<CR>
 nnoremap <leader>ei :e! ~/.i3/config<CR>
-nnoremap <leader>bn :bnext<CR>
-nnoremap <leader>bp :bprevious<CR>
-noremap <leader>q :e ~/.scratch<CR>
-nnoremap <leader>, :!
+nnoremap <leader>ez :e! ~/.zshrc<CR>
+nnoremap <leader>w  :w<CR>
+nnoremap <leader>q  :wq<CR>
+nnoremap <leader>x  :q!<CR>
+nnoremap ,,         :!
+nnoremap <SPACE><SPACE> :
 
 nnoremap << <$
 nnoremap >> >$
 nnoremap Y y$
 map <silent> <leader><CR> :noh<CR>
+nnoremap j gj
+nnoremap k gk
 inoremap kj <ESC>
 inoremap jk <ESC>
 
@@ -70,25 +83,19 @@ inoremap jk <ESC>
 :onoremap n< :<c-u>normal! f<vi<<CR>
 :onoremap l< :<C-U>normal! F>vi<<CR>
 
-inoremap !1 ()<ESC>i
-inoremap !2 []<ESC>i
-inoremap !3 {}<ESC>i
-inoremap !4 {<ESC>o}<ESC>O
-inoremap !t <><ESC>i
-inoremap !q ''<ESC>i
-inoremap !e ""<ESC>i
-
 nnoremap <C-J> mz:m+<CR>`z
 nnoremap <C-K> mz:m-2<CR>`z
 vnoremap <C-J> :m'>+<CR>`<my`>mzgv`yo`z
 vnoremap <C-K> :m'<-2<CR>`>my`<mzgv`yo`z
 
-nnoremap \x :cclose<CR>
 "--}}}--
 " Abbreviations --{{{--
 iab xdate <C-r>=strftime("%Y-%m-%d %H:%M:%S")<CR>
 " --}}}--
 " AutoCommands --{{{--
+
+autocmd Filetype org set shiftwidth=2
+
 " --}}}--
 " Config --{{{--
 
@@ -105,7 +112,9 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = '¶'
-" let g:user_emmet_settings = webapi#json#decode(join(readfile(expand('~/.vim/snippets.json')), "\n"))
+
+let g:org_agenda_files = ['~/.org/*.org']
+
 " --}}}--
 " Plugins --{{{--
 
@@ -131,6 +140,8 @@ Plug('jceb/vim-orgmode')
 Plug('raimondi/delimitmate')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug('junegunn/fzf.vim')
+Plug('jceb/vim-orgmode')
+Plug('vim-scripts/utl.vim')
 
 call plug#end()
 " --}}}--
